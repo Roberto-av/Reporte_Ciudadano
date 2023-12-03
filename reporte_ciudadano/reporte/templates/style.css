@@ -1,0 +1,15 @@
+
+
+.container-fluid{
+    background-color: #1ACD81;
+}
+
+.row{
+    background-color: #43E5A0;
+}
+
+.btn, .btn-primary{
+    background-color: #095C3C !important;
+}
+
+
