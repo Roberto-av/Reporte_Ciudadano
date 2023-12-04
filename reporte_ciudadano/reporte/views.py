@@ -7,6 +7,9 @@ from django.db import IntegrityError
 def inicio(request):
     return render(request,'base.html')
 
+def login(request):
+    return render(request,'login.html')
+
 def registro(request):
     if request.method == 'GET':
         return render(request, 'registro.html', {'form': RegistroForm})
