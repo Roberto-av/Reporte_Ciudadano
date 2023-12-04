@@ -35,7 +35,7 @@ def reporte(request):
                 # Asignando el usuario al reporte si el ID está presente en la sesión
                 reporte.usuario_id = usuario_id
                 reporte.save()
-                return redirect('index')
+                return redirect('reporte/lista')
             else:
                 # Manejar el caso donde no hay un usuario en la sesión
                 messages.error(request, 'Usuario no encontrado.')

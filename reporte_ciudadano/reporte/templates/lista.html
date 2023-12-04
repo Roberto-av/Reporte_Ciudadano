@@ -41,8 +41,12 @@
       padding: 5px 10px;
       border-radius: 5px;
     }
+    .scrollable-container {
+        max-height: 800px; /* Altura máxima para el área desplazable */
+        overflow-y: auto; /* Añade una barra de desplazamiento vertical si es necesario */
+    }
 </style>
-<div class="container">
+<div class="container scrollable-container">
   <h1>Lista de reportes: usuario</h1>
   <div id="accordion">
     {% for reporte in reportes %}
@@ -62,7 +66,9 @@
               <li>Tipo de incidencia: {{ reporte.tipo_incidencia }}</li>
               <li>Descripción: {{ reporte.descripcion }}</li>
               <li>Dirección: {{ reporte.direccion }}</li>
-              <li>Estatus: {{ reporte.estatus }}</li>
+              <strong class="{% if reporte.estatus == 'Pendiente' %}text-danger{% elif reporte.estatus == 'En proceso' %}text-warning{% elif reporte.estatus == 'Resuelto' %}text-success{% endif %}">
+                <li>Estatus: {{ reporte.estatus }}</li>
+              </strong>
               {% if reporte.imagen %}
               <li>
                 Imagen

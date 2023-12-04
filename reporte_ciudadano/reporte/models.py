@@ -39,7 +39,7 @@ class Reporte(models.Model):
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        fila = 'Incidencia' + self.tipo_incidencia + ' - ' + 'Descrpcion' + self.descripcion
+        fila = 'Incidencia:: ' + self.tipo_incidencia + ' - ' + 'Descrpcion -' + self.descripcion
         return fila
     
     def delete(self, using=None, keep_parents=False):
