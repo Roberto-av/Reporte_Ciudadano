@@ -6,6 +6,11 @@
 <form method="POST" action="/registro/">
   {% csrf_token %}
   <div class="container border border-sm rounded"> 
+    {% if messages %}
+        {% for mensaje in messages %}
+          <span class="alert alert-{{mensaje.tags}} text-danger">{{mensaje}}</span>
+        {% endfor %}
+    {% endif %}
     <div class="row justify-content-md-center rounded">
       <div class="col-md-7">
         <div class="panel panel-primary">

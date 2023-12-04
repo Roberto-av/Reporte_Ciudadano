@@ -3,9 +3,17 @@
 {% block titulo %} Inicio de sesion {% endblock %}
 
 {% block content %}
+
+
+
 <form method="POST" action="/login/">
   {% csrf_token %}
-  <div class="container border border-sm bg-primary rounded"  style="width: 30%;"> 
+  <div class="container border border-sm rounded"> 
+      {% if messages %}
+        {% for mensaje in messages %}
+          <span class="alert alert-{{mensaje.tags}} text-danger">{{mensaje}}</span>
+        {% endfor %}
+      {% endif %}
     <div class="row justify-content-md-center rounded">
       <div class="col-md-7">
         <div class="panel panel-primary">
@@ -15,15 +23,15 @@
           <div class="panel-body">
             <div class="form-group mb-2">
               <label for="Correo">Correo electrónico/email</label>
-              <input type="text" class="form-control" id="Correo">
+              <input type="text" class="form-control" id="Correo" name="correo_electronico"">
             </div>
             <div class="form-group mb-1">
               <label for="Password">Contraseña</label>
-              <input type="password" class="form-control" id="Password">
+              <input type="password" class="form-control" id="Password" name="contraseña"">
             </div>
             <hr>
             <div class="panel-footer text-center rounded-bottom">
-              <button class="btn btn-primary mb-4">Ingresar</button>
+              <button type="submit" class="btn btn-primary mb-4">Ingresar</button>
             </div>
             <div class="registrarse text-center">
               <p>¿No tienes una cuenta?</p>
