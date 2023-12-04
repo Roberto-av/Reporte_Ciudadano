@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Usuario
+from .models import Usuario, Reporte
 from .forms import RegistroForm, ReporteForm
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -10,6 +10,10 @@ from django.contrib.auth import logout as django_logout
 # Create your views here.
 def inicio(request):
     return render(request,'index.html')
+
+def lista_reportes(request):
+    reportes = Reporte.objects.filter(usuario_id=request.session.get('usuario_id'))
+    return render(request, 'lista.html', {'reportes': reportes})
 
 def reporte(request):
     if request.method == 'GET':
