@@ -21,6 +21,10 @@
       <div class="panel-footer rounded-bottom" style="display: fixed;">
         <a href="{% url 'reporte' %}"><button  class="btn btn-success" style="width: 150px;" >REPORTAR</button></a>
       </div>
+      <hr>
+      <div class="panel-footer rounded-bottom" style="display: fixed;">
+        <a href="{% url 'lista-reporte' %}"><button  class="btn btn-success" style="width: 150px;" >Ver Reportes</button></a>
+      </div>
       {% else %}
       <div class="panel-footer  rounded-bottom" style="display: fixed;">
         <a href="{% url 'login' %}"><button  class="btn btn-success" style="width: 150px;" >REPORTAR</button></a>

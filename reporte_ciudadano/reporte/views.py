@@ -12,10 +12,16 @@ def inicio(request):
     return render(request,'index.html')
 
 def lista_reportes(request):
+    if 'usuario_id' not in request.session:
+        # La sesión del usuario no está activa
+        return redirect('login')
     reportes = Reporte.objects.filter(usuario_id=request.session.get('usuario_id'))
     return render(request, 'lista.html', {'reportes': reportes})
 
 def reporte(request):
+    if 'usuario_id' not in request.session:
+        # La sesión del usuario no está activa
+        return redirect('login')
     if request.method == 'GET':
         return render(request, 'reporte.html', {'form': ReporteForm()})
           
