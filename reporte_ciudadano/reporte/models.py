@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Usuario(models.Model):
@@ -7,6 +8,7 @@ class Usuario(models.Model):
     apellidos = models.CharField(max_length=100)
     correo_electronico = models.EmailField(unique=True)
     numero_celular = models.CharField(max_length=20, null=True, blank=True)
+    contraseña = models.CharField(max_length=128, null=True)
 
 class Empleado(models.Model):
     id_empleado = models.AutoField(primary_key=True)
