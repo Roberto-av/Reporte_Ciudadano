@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Inicio de sesion Admin {% endblock %}
+
+{% block content %}
+
+<form method="POST" action="/login/empleado">
+  {% csrf_token %}
+  <div class="container border border-sm rounded"> 
+      {% if messages %}
+        {% for mensaje in messages %}
+          <span class="alert alert-{{mensaje.tags}} text-danger">{{mensaje}}</span>
+        {% endfor %}
+      {% endif %}
+    <div class="row justify-content-md-center rounded">
+      <div class="col-md-7">
+        <div class="panel panel-primary">
+          <div class="panel-heading rounded-top">
+            <h2 class="text-center mb-3">Iniciar sesion como admin</h2>
+          </div>
+          <div class="panel-body">
+            <div class="form-group mb-2">
+              <label for="Correo">Correo electrónico/email</label>
+              <input type="text" class="form-control" id="Correo" name="correo" placeholder="Ingresa el correo">
+            </div>
+            <div class="form-group mb-1">
+              <label for="Password">Contraseña</label>
+              <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingresa la contraseña">
+            </div>
+            <hr>
+            <div class="panel-footer text-center rounded-bottom">
+              <button type="submit" class="btn btn-primary mb-4">Ingresar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

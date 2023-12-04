@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from .models import Usuario, Reporte
-from .forms import RegistroForm, ReporteForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Usuario, Reporte, Empleado
+from .forms import RegistroForm, ReporteForm, EditarReporteForm
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
@@ -17,6 +17,14 @@ def lista_reportes(request):
         return redirect('login')
     reportes = Reporte.objects.filter(usuario_id=request.session.get('usuario_id'))
     return render(request, 'lista.html', {'reportes': reportes})
+
+def lista_reportes_empleado(request):
+    if 'usuario_id' not in request.session:
+        # La sesión del usuario no está activa
+        return redirect('login/empleado')
+    #Obtener todos los reportes
+    reportes = Reporte.objects.all()
+    return render(request, 'lista_empleado.html', {'reportes': reportes})
 
 def reporte(request):
     if 'usuario_id' not in request.session:
@@ -93,6 +101,53 @@ def registro(request):
     print("Aqui toy 4")
     return render(request, 'registro.html')
      
+def login_empleado(request):
+    if 'usuario_id' in request.session:
+        del request.session['usuario_id']
+        return redirect('index')
+    else:
+        if request.method == 'POST':
+            correo = request.POST['correo']  # Asegúrate de que los campos coincidan con los nombres en tu formulario HTML
+            contraseña = request.POST['contraseña']
 
+            # Busca el usuario en tu tabla de Usuarios
+            try:
+                empleado = Empleado.objects.get(correo=correo, contraseña=contraseña)
+            except Empleado.DoesNotExist:
+                empleado = None
+
+            if empleado is not None:
+                # Autenticación exitosa, puedes hacer lo que necesites aquí, como establecer una sesión
+                # Por ejemplo, podrías usar sesiones de Django para mantener al usuario autenticado
+                request.session['usuario_id'] = empleado.id_empleado
+                return redirect('reporte/lista/admin')
+            else:
+                # Si el usuario no existe o las credenciales son incorrectas, muestra un mensaje de error
+                messages.error(request, 'El correo o la contraseña son incorrectos, Intentelo nuevamente.')
+
+    return render(request, 'login_empleado.html')
     
-     
+def editar_reporte(request, id_reporte):
+    if 'usuario_id' not in request.session:
+        # La sesión del usuario no está activa
+        return redirect('login/empleado')
+
+    reporte = get_object_or_404(Reporte, id_reporte=id_reporte)
+
+    if request.method == 'POST':
+        form = EditarReporteForm(request.POST)
+        if form.is_valid():
+            nuevo_estado = form.cleaned_data['estatus']
+            nuevo_comentario = form.cleaned_data['comentarios']
+
+            # Actualizar el estado y comentario del reporte
+            reporte.estatus = nuevo_estado
+            reporte.comentarios = nuevo_comentario
+            reporte.save()
+
+            # Redireccionar a la página de detalles del reporte
+            return redirect('reporte/lista/admin')
+    else:
+        form = EditarReporteForm(initial={'estatus': reporte.estatus, 'comentarios': reporte.comentarios})
+
+    return render(request, 'editar_reporte.html', {'form': form, 'reporte': reporte})

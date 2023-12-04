@@ -15,7 +15,8 @@ class Empleado(models.Model):
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=50)
     correo = models.EmailField()
-
+    contraseña = models.CharField(max_length=128, null=True)
+    
 class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
@@ -37,6 +38,7 @@ class Reporte(models.Model):
     imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
+    comentarios = models.TextField(null=True)
 
     def __str__(self):
         fila = 'Incidencia:: ' + self.tipo_incidencia + ' - ' + 'Descrpcion -' + self.descripcion

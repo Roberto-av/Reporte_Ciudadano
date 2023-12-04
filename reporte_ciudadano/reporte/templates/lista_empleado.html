@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Reportes(Admin) {% endblock %}
+
+{% block content %}
+
+<style>
+    .botondesplegable {
+    
+      background-color: #43E5A0; 
+      color: #0f0e0e; 
+      width: 100%;
+      height: 5vh;
+      border-radius: 10px;
+      border: 0px   ;
+    }
+  
+    .card-header{
+        background-color: #43E5A0; 
+    }
+    .botondesplegable:hover {
+        border: 0px   ;
+      background-color: #43E5A0; 
+    }
+    .card {
+        padding-top: 30px;
+      border: 0; 
+      background: none; 
+    }
+    .horizontal-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px; /* Espacio entre elementos de la lista */
+    }
+
+    /* Estilos para cada elemento de la lista */
+    .horizontal-list li {
+      background-color: #f0f0f0;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .scrollable-container {
+        max-height: 800px; /* Altura máxima para el área desplazable */
+        overflow-y: auto; /* Añade una barra de desplazamiento vertical si es necesario */
+    }
+</style>
+<div class="container scrollable-container mb-4">
+    <h1>Lista de reportes: Admin</h1>
+    <div id="accordion">
+      {% for reporte in reportes %}
+        <div class="card">
+          <div class="card-header" id="heading{{ reporte.id_reporte }}">
+            <h5 class="mb-0">
+              <button class="botondesplegable text-start" data-bs-toggle="collapse" data-bs-target="#collapse{{ reporte.id_reporte }}" aria-expanded="true" aria-controls="collapse{{ reporte.id_reporte }}">
+                <p>Reporte: {{ forloop.counter }} ▼</p> 
+              </button>
+            </h5>
+          </div>
+          
+          <div id="collapse{{ reporte.id_reporte }}" class="collapse" aria-labelledby="heading{{ reporte.id_reporte }}" data-bs-parent="#accordion">
+            <div class="card-body text-left">
+              <ul class="horizontal-list">
+                <!-- Convertir los elementos <p> en elementos de la lista horizontal -->
+                <li>Tipo de incidencia: {{ reporte.tipo_incidencia }}</li>
+                <li>Descripción: {{ reporte.descripcion }}</li>
+                <li>Dirección: {{ reporte.direccion }}</li>
+                <strong class="{% if reporte.estatus == 'Pendiente' %}text-danger{% elif reporte.estatus == 'En proceso' %}text-warning{% elif reporte.estatus == 'Resuelto' %}text-success{% endif %}">
+                  <li>Estatus: {{ reporte.estatus }}</li>
+                </strong>
+                {% if reporte.imagen %}
+                <li>
+                  Imagen
+                  <img src="{{ reporte.imagen.url }}" height="100">
+                </li>
+                {% else %}
+                <li>
+                  No hay imagen asociada para este reporte.
+                </li>
+                {% endif %}
+                <li>Fecha de creación: {{ reporte.fecha_creacion }}</li>
+                <li>Fecha de actualización: {{ reporte.fecha_actualizacion }}</li>
+                <li>
+                  Usuario: {{ reporte.usuario.nombre }} {{ reporte.usuario.apellidos }}
+                </li>
+                <li>
+                    Comentarios: {{ reporte.comentarios }}
+                </li>
+                <li>
+                    <a href="{% url 'reporte/lista/admin/editar' reporte.id_reporte %}" class="btn btn-primary">Editar Reporte</a>
+                </li>
+                <!-- Otros detalles del reporte como elementos de la lista -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+
+{% endblock %}
