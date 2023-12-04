@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as mensajes_de_error
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,4 +135,7 @@ MESSAGE_TAGS = {
     mensajes_de_error.SUCCESS:'succes',
     mensajes_de_error.WARNING:'warning',
     mensajes_de_error.ERROR:'error'
-} 
+}
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'')
+MEDIA_URL = '/imagenes/'

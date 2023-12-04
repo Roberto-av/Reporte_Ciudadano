@@ -40,51 +40,54 @@
       }
     </style>
 
-<div class="container border border-sm rounded justify-content-center" style="width: 50%; height: 50vh; padding: 20px;">
-  <div class="row justify-content-md-center rounded">
+<form method="POST" action="/reporte" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container border border-sm rounded justify-content-center" style="width: 50%; height: 50vh; padding: 20px;">
+    <div class="row justify-content-md-center rounded">
       <div class="col-md-7">
-          <div class="panel panel-primary">
-              <div class="panel-heading rounded-top">
-                  <h2 class="text-center mb-3">Reporte de incidente</h2>
-              </div>
-              <div class="panel-body">
-                  <!-- lista de incidentes -->
-                  <select name="id" id="tipo-incidente" class="form-control mb-2">
-                      <option value="" disabled hidden selected>Tipo de accidente</option>
-                      <option value="Baches">Baches</option>
-                      <option value="Problemas de alumbrado">Problemas de alumbrado</option>
-                      <option value="Fuga en alcantarillas">Fuga en alcantarillas</option>
-                      <option value="Reporte de basura sobre vía pública">Reporte de basura sobre vía pública</option>
-                  </select>
-
-                  <div class="form-group mb-3">
-                      <label for="descripcion-problema">Describenos el incidente</label>
-                      <textarea name="Descripcion" id="descripcion" class="form-control" cols="60" rows="10" style="resize: none;" placeholder="Descripcion del problema"></textarea>
-                  </div>
-
-                  <div class="form-group mb-3">
-                      <label for="direccion">Dirección</label>
-                      <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingresa la dirección">
-                  </div>
-
-                  <!-- seccion para subir foto al reporte -->
-                  <input type="file" id="fileInput" accept=".img,.png,.jpg,.jpeg" onchange="previewImage(event)" style="display: none;">
-
-                  <div class="d-flex flex-column align-items-center mb-3">
-                      <label id="subir" for="fileInput" style="cursor: pointer; height: 75%; width: 45%; border-radius: 6px; border: 2px dashed #140c0c;"> Sube una foto del incidente</label>
-                  </div>
-
-                  <div id="preview-container" style="display: none;" class="mb-3 d-flex align-items-center justify-content-center">
-                      <img id="preview-image" style="width: 80%; height: auto;">
-                  </div>
-              </div>
-              <div class="text-center rounded-bottom">
-                  <button id="enviar" class="btn btn-primary mb-4">Enviar</button>
-              </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading rounded-top">
+            <h2 class="text-center mb-3">Reporte de incidente</h2>
           </div>
+          <div class="panel-body">
+            <!-- lista de incidentes -->
+            <select name="tipo_incidencia" id="tipo_incidencia" class="form-control mb-2" required>
+              <option value="" disabled hidden selected>Tipo de accidente</option>
+              <option value="Bache">Bache</option>
+              <option value="Problema de alumbrado">Problema de alumbrado</option>
+              <option value="Fuga en alcantarilla">Fuga en alcantarilla</option>
+              <option value="Reporte de basura">Reporte de basura</option>
+            </select>
+
+            <div class="form-group mb-3">
+              <label for="descripcion-problema">Describenos el incidente</label>
+              <textarea name="descripcion" id="descripcion" class="form-control" cols="60" rows="10" style="resize: none;" placeholder="Descripcion del problema" required></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="direccion">Dirección</label>
+              <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingresa la dirección">
+            </div>
+
+            <!-- seccion para subir foto al reporte -->
+            <input type="file" id="fileInput" accept=".img,.png,.jpg,.jpeg" onchange="previewImage(event)" style="display: none;" name="imagen" required>
+
+            <div class="d-flex flex-column align-items-center mb-3">
+              <label id="subir" for="fileInput" style="cursor: pointer; height: 75%; width: 45%; border-radius: 6px; border: 2px dashed #140c0c;">Sube una foto del incidente</label>
+            </div>
+
+            <div id="preview-container" style="display: none;" class="mb-3 d-flex align-items-center justify-content-center">
+              <img id="preview-image" style="width: 80%; height: auto;">
+            </div>
+          </div>
+          <div class="text-center rounded-bottom">
+            <button id="enviar" class="btn btn-primary mb-4">Enviar</button>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-</div>
+</form>
 
 
 <script>
